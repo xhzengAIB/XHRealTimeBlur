@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XHRealTimeBlur : UIToolbar
+@interface XHRealTimeBlur : UIView
 
 @end
