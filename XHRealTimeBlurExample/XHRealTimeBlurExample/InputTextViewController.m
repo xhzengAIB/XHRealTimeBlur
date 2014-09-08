@@ -43,25 +43,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"Input";
+    
     self.textField.inputAccessoryView = self.textView;
     
     [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillHideNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self.view disMissRealTimeBlur];
-//        NSTimeInterval duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
-//        [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//            self.realTimeBlur.alpha = 0.0;
-//        } completion:^(BOOL finished) {
-//            
-//        }];
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillShowNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self.view showRealTimeBlurWithBlurStyle:XHBlurStyleTranslucent];
-//        NSTimeInterval duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
-//        [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//            self.realTimeBlur.alpha = 1.0;
-//        } completion:^(BOOL finished) {
-//            
-//        }];
     }];
 }
 

@@ -69,7 +69,7 @@
             </objects>
             <point key="canvasLocation" x="-128" y="323"/>
         </scene>
-        <!--Input Text View Controller-->
+        <!--Input Text View Controller - Input-->
         <scene sceneID="JhU-gq-RMm">
             <objects>
                 <viewController id="EsV-lJ-ffF" customClass="InputTextViewController" sceneMemberID="viewController">
@@ -104,7 +104,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xMf-Qc-dX0"/>
+                    <navigationItem key="navigationItem" title="Input" id="xMf-Qc-dX0"/>
                     <connections>
                         <outlet property="textField" destination="EFw-f0-Te4" id="rnB-bP-vjt"/>
                     </connections>
@@ -113,7 +113,7 @@
             </objects>
             <point key="canvasLocation" x="827" y="805"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - Web-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
@@ -140,7 +140,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="kmI-SE-StL"/>
+                    <navigationItem key="navigationItem" title="Web" id="kmI-SE-StL"/>
                     <connections>
                         <outlet property="webView" destination="IOh-tQ-KyI" id="qKG-LS-bfa"/>
                     </connections>
