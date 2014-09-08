@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB5E314B19BDF911003E74F8 /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5E314A19BDF911003E74F8 /* RootTableViewController.m */; };
+		AB5E314E19BDF9B4003E74F8 /* InputTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5E314D19BDF9B4003E74F8 /* InputTextViewController.m */; };
+		AB5E315319BE013A003E74F8 /* IMG_0117.JPG in Resources */ = {isa = PBXBuildFile; fileRef = AB5E315219BE013A003E74F8 /* IMG_0117.JPG */; };
 		ABA639D619BCB2D9002DC3B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA639D519BCB2D9002DC3B2 /* Foundation.framework */; };
 		ABA639D819BCB2D9002DC3B2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA639D719BCB2D9002DC3B2 /* CoreGraphics.framework */; };
 		ABA639DA19BCB2D9002DC3B2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA639D919BCB2D9002DC3B2 /* UIKit.framework */; };
@@ -36,6 +39,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB5E314919BDF911003E74F8 /* RootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTableViewController.h; sourceTree = "<group>"; };
+		AB5E314A19BDF911003E74F8 /* RootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTableViewController.m; sourceTree = "<group>"; };
+		AB5E314C19BDF9B4003E74F8 /* InputTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextViewController.h; sourceTree = "<group>"; };
+		AB5E314D19BDF9B4003E74F8 /* InputTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextViewController.m; sourceTree = "<group>"; };
+		AB5E315219BE013A003E74F8 /* IMG_0117.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0117.JPG; sourceTree = "<group>"; };
 		ABA639D219BCB2D9002DC3B2 /* XHRealTimeBlurExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XHRealTimeBlurExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA639D519BCB2D9002DC3B2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ABA639D719BCB2D9002DC3B2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -120,10 +128,14 @@
 			children = (
 				ABA639E419BCB2D9002DC3B2 /* AppDelegate.h */,
 				ABA639E519BCB2D9002DC3B2 /* AppDelegate.m */,
+				AB5E314919BDF911003E74F8 /* RootTableViewController.h */,
+				AB5E314A19BDF911003E74F8 /* RootTableViewController.m */,
 				ABA639E719BCB2D9002DC3B2 /* Main_iPhone.storyboard */,
 				ABA639EA19BCB2D9002DC3B2 /* Main_iPad.storyboard */,
 				ABA639ED19BCB2D9002DC3B2 /* ViewController.h */,
 				ABA639EE19BCB2D9002DC3B2 /* ViewController.m */,
+				AB5E314C19BDF9B4003E74F8 /* InputTextViewController.h */,
+				AB5E314D19BDF9B4003E74F8 /* InputTextViewController.m */,
 				ABA639F019BCB2D9002DC3B2 /* Images.xcassets */,
 				ABA639DC19BCB2D9002DC3B2 /* Supporting Files */,
 			);
@@ -133,6 +145,7 @@
 		ABA639DC19BCB2D9002DC3B2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AB5E315219BE013A003E74F8 /* IMG_0117.JPG */,
 				ABA639DD19BCB2D9002DC3B2 /* XHRealTimeBlurExample-Info.plist */,
 				ABA639DE19BCB2D9002DC3B2 /* InfoPlist.strings */,
 				ABA639E119BCB2D9002DC3B2 /* main.m */,
@@ -248,6 +261,7 @@
 				ABA639EC19BCB2D9002DC3B2 /* Main_iPad.storyboard in Resources */,
 				ABA639F119BCB2D9002DC3B2 /* Images.xcassets in Resources */,
 				ABA639E919BCB2D9002DC3B2 /* Main_iPhone.storyboard in Resources */,
+				AB5E315319BE013A003E74F8 /* IMG_0117.JPG in Resources */,
 				ABA639E019BCB2D9002DC3B2 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,7 +281,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB5E314B19BDF911003E74F8 /* RootTableViewController.m in Sources */,
 				ABA639EF19BCB2D9002DC3B2 /* ViewController.m in Sources */,
+				AB5E314E19BDF9B4003E74F8 /* InputTextViewController.m in Sources */,
 				ABA639E619BCB2D9002DC3B2 /* AppDelegate.m in Sources */,
 				ABA639E219BCB2D9002DC3B2 /* main.m in Sources */,
 				ABA63A1019BCB32C002DC3B2 /* XHRealTimeBlur.m in Sources */,
@@ -485,6 +501,7 @@
 				ABA63A0919BCB2D9002DC3B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ABA63A0A19BCB2D9002DC3B2 /* Build configuration list for PBXNativeTarget "XHRealTimeBlurExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +510,7 @@
 				ABA63A0C19BCB2D9002DC3B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
