@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "RealTimeBlur"
+  s.name         = "XHRealTimeBlur"
   s.version      = "1.0"
   s.summary      = "RealTimeBlur applies to the view, transitions, background."
   s.homepage     = "https://github.com/xhzengAIB/RealTimeBlur"
