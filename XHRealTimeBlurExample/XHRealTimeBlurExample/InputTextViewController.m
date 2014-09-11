@@ -47,11 +47,18 @@
     
     self.textField.inputAccessoryView = self.textView;
     
+    __weak InputTextViewController *weakSelf = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillHideNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        [self.view disMissRealTimeBlur];
+        if (weakSelf) {
+            __strong InputTextViewController *strongSelf = weakSelf;
+            [strongSelf.view disMissRealTimeBlur];
+        }
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillShowNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        [self.view showRealTimeBlurWithBlurStyle:XHBlurStyleTranslucent];
+        if (weakSelf) {
+            __strong InputTextViewController *strongSelf = weakSelf;
+            [strongSelf.view showRealTimeBlurWithBlurStyle:XHBlurStyleTranslucent];
+        }
     }];
 }
 
