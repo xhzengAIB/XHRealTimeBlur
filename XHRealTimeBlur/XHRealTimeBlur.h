@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
-typedef void(^DidDismissBlcok)(void);
+typedef void(^DidDismissBlurViewBlcok)(void);
 
 static NSString * const XHRealTimeBlurKey = @"XHRealTimeBlurKey";
-static NSString * const XHRealTimeDidDismissBlockKey = @"XHRealTimeDidDismissBlockKey";
+static NSString * const XHRealTimeDidDismissBlurViewBlcokKey = @"XHRealTimeDidDismissBlurViewBlcokKey";
 
 typedef NS_ENUM(NSInteger, XHBlurStyle) {
     // 垂直梯度背景从黑色到半透明的。
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, XHBlurStyle) {
  *  是否触发点击手势，默认关闭
  */
 @property (nonatomic, assign) BOOL hasTapGestureEnable;
-@property (nonatomic, copy) DidDismissBlcok didDismissCompleted;
+@property (nonatomic, copy) DidDismissBlurViewBlcok didDismissBlurViewCompleted;
 
 - (void)showBlurViewAtView:(UIView *)currentView;
 
@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger, XHBlurStyle) {
 
 @interface UIView (XHRealTimeBlur)
 
-@property (nonatomic, copy) DidDismissBlcok didDismissCompleted;
+@property (nonatomic, copy) DidDismissBlurViewBlcok didDismissBlurViewCompleted;
 
 - (void)showRealTimeBlurWithBlurStyle:(XHBlurStyle)blurStyle;
 - (void)showRealTimeBlurWithBlurStyle:(XHBlurStyle)blurStyle hasTapGestureEnable:(BOOL)hasTapGestureEnable;
@@ -63,12 +63,12 @@ typedef NS_ENUM(NSInteger, XHBlurStyle) {
 
 @implementation UIView (XHRealTimeBlur)
 
-- (DidDismissBlcok)didDismissCompleted {
-    return objc_getAssociatedObject(self, &XHRealTimeDidDismissBlockKey);
+- (DidDismissBlurViewBlcok)didDismissBlurViewCompleted {
+    return objc_getAssociatedObject(self, &XHRealTimeDidDismissBlurViewBlcokKey);
 }
 
-- (void)setDidDismissCompleted:(DidDismissBlcok)didDismissCompleted {
-    objc_setAssociatedObject(self, &XHRealTimeDidDismissBlockKey, didDismissCompleted, OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)setDidDismissBlurViewCompleted:(DidDismissBlurViewBlcok)didDismissBlurViewCompleted {
+    objc_setAssociatedObject(self, &XHRealTimeDidDismissBlurViewBlcokKey, didDismissBlurViewCompleted, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (XHRealTimeBlur *)realTimeBlur {
@@ -90,7 +90,7 @@ typedef NS_ENUM(NSInteger, XHBlurStyle) {
         realTimeBlur.blurStyle = blurStyle;
         [self setRealTimeBlur:realTimeBlur];
     }
-    realTimeBlur.didDismissCompleted = self.didDismissCompleted;
+    realTimeBlur.didDismissBlurViewCompleted = self.didDismissBlurViewCompleted;
     realTimeBlur.hasTapGestureEnable = hasTapGestureEnable;
     [realTimeBlur showBlurViewAtView:self];
 }

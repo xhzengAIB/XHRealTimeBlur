@@ -90,8 +90,8 @@
 
 - (void)handleTapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer {
     [self hiddenAnimationCompletion:^(BOOL finished) {
-        if (self.didDismissCompleted) {
-            self.didDismissCompleted();
+        if (self.didDismissBlurViewCompleted) {
+            self.didDismissBlurViewCompleted();
         }
     }];
 }

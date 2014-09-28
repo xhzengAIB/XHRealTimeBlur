@@ -32,7 +32,7 @@
 }
 
 - (IBAction)TouchThere:(id)sender {
-    self.view.didDismissCompleted = ^() {
+    self.view.didDismissBlurViewCompleted = ^() {
         NSLog(@"dismiss");
     };
     [self.view showRealTimeBlurWithBlurStyle:XHBlurStyleBlackTranslucent hasTapGestureEnable:YES];
