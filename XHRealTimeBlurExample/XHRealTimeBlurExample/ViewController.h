@@ -11,5 +11,6 @@
 @interface ViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+- (IBAction)TouchThere:(id)sender;
 
 @end

@@ -24,9 +24,6 @@
     [self.webView loadRequest:request];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.view showRealTimeBlurWithBlurStyle:XHBlurStyleTranslucent];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -34,4 +31,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)TouchThere:(id)sender {
+    self.view.didDismissCompleted = ^() {
+        NSLog(@"dismiss");
+    };
+    [self.view showRealTimeBlurWithBlurStyle:XHBlurStyleBlackTranslucent hasTapGestureEnable:YES];
+}
 @end

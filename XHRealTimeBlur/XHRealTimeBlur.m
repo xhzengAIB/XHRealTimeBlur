@@ -37,6 +37,7 @@
 
 @property (nonatomic, strong) XHGradientView *gradientBackgroundView;
 @property (nonatomic, strong) UIToolbar *blurBackgroundView;
+@property (nonatomic, strong) UIView *blackTranslucentBackgroundView;
 @property (nonatomic, strong) UIView *whiteBackgroundView;
 
 @end
@@ -72,15 +73,35 @@
 }
 
 - (void)hiddenAnimation {
+    [self hiddenAnimationCompletion:NULL];
+}
+
+- (void)hiddenAnimationCompletion:(void (^)(BOOL finished))completion {
     [UIView animateWithDuration:self.duration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
+        if (completion) {
+            completion(finished);
+        }
         self.showed = NO;
         [self removeFromSuperview];
     }];
 }
 
+- (void)handleTapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer {
+    [self hiddenAnimationCompletion:^(BOOL finished) {
+        if (self.didDismissCompleted) {
+            self.didDismissCompleted();
+        }
+    }];
+}
+
 #pragma mark - Propertys
+
+- (void)setHasTapGestureEnable:(BOOL)hasTapGestureEnable {
+    _hasTapGestureEnable = hasTapGestureEnable;
+    [self setupTapGesture];
+}
 
 - (XHGradientView *)gradientBackgroundView {
     if (!_gradientBackgroundView) {
@@ -95,6 +116,14 @@
         [_blurBackgroundView setBarStyle:UIBarStyleBlackTranslucent];
     }
     return _blurBackgroundView;
+}
+
+- (UIView *)blackTranslucentBackgroundView {
+    if (!_blackTranslucentBackgroundView) {
+        _blackTranslucentBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
+        _blackTranslucentBackgroundView.backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.500];
+    }
+    return _blackTranslucentBackgroundView;
 }
 
 - (UIView *)whiteBackgroundView {
@@ -113,6 +142,8 @@
             break;
         case XHBlurStyleTranslucent:
             return self.blurBackgroundView;
+        case XHBlurStyleBlackTranslucent:
+            return self.blackTranslucentBackgroundView;
             break;
         case XHBlurStyleWhite:
             return self.whiteBackgroundView;
@@ -128,6 +159,15 @@
     self.duration = 0.3;
     self.blurStyle = XHBlurStyleTranslucent;
     self.backgroundColor = [UIColor clearColor];
+
+    _hasTapGestureEnable = NO;
+}
+
+- (void)setupTapGesture {
+    if (self.hasTapGestureEnable) {
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGestureRecognizer:)];
+        [self addGestureRecognizer:tapGestureRecognizer];
+    }
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -150,7 +190,9 @@
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     if (newSuperview) {
-        [self addSubview:[self backgroundView]];
+        UIView *backgroundView = [self backgroundView];
+        backgroundView.userInteractionEnabled = NO;
+        [self addSubview:backgroundView];
     }
 }
 
