@@ -68,7 +68,7 @@
         }
     }
     self.alpha = 0.0;
-    [containerView addSubview:self];
+    [containerView insertSubview:self atIndex:0];
     [UIView animateWithDuration:self.showDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.alpha = 1.0;
     } completion:^(BOOL finished) {
