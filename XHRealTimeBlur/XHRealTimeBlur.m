@@ -62,13 +62,20 @@
     if (self.showed) {
         [self disMiss];
         return;
+    } else {
+        if (self.willShowBlurViewcomplted) {
+            self.willShowBlurViewcomplted();
+        }
     }
     self.alpha = 0.0;
     [containerView addSubview:self];
-    [UIView animateWithDuration:self.duration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:self.showDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.alpha = 1.0;
     } completion:^(BOOL finished) {
         self.showed = YES;
+        if (self.didShowBlurViewcompleted) {
+            self.didShowBlurViewcompleted(finished);
+        }
     }];
 }
 
@@ -77,7 +84,7 @@
 }
 
 - (void)hiddenAnimationCompletion:(void (^)(BOOL finished))completion {
-    [UIView animateWithDuration:self.duration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:self.disMissDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
         if (completion) {
@@ -94,7 +101,7 @@
     }
     [self hiddenAnimationCompletion:^(BOOL finished) {
         if (self.didDismissBlurViewCompleted) {
-            self.didDismissBlurViewCompleted();
+            self.didDismissBlurViewCompleted(finished);
         }
     }];
 }
@@ -159,7 +166,7 @@
 #pragma mark - Life Cycle
 
 - (void)setup {
-    self.duration = 0.3;
+    self.showDuration = self.disMissDuration = 0.3;
     self.blurStyle = XHBlurStyleTranslucent;
     self.backgroundColor = [UIColor clearColor];
 
@@ -197,6 +204,87 @@
         backgroundView.userInteractionEnabled = NO;
         [self addSubview:backgroundView];
     }
+}
+
+@end
+
+#pragma mark - UIView XHRealTimeBlur分类的实现
+
+@implementation UIView (XHRealTimeBlur)
+
+#pragma mark - Show Block
+
+- (WillShowBlurViewBlcok)willShowBlurViewcomplted {
+    return objc_getAssociatedObject(self, &XHRealTimeWillShowBlurViewBlcokBlcokKey);
+}
+
+- (void)setWillShowBlurViewcomplted:(WillShowBlurViewBlcok)willShowBlurViewcomplted {
+    objc_setAssociatedObject(self, &XHRealTimeWillShowBlurViewBlcokBlcokKey, willShowBlurViewcomplted, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (DidShowBlurViewBlcok)didShowBlurViewcompleted {
+    return objc_getAssociatedObject(self, &XHRealTimeDidShowBlurViewBlcokBlcokKey);
+}
+
+- (void)setDidShowBlurViewcompleted:(DidShowBlurViewBlcok)didShowBlurViewcompleted {
+    objc_setAssociatedObject(self, &XHRealTimeDidShowBlurViewBlcokBlcokKey, didShowBlurViewcompleted, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+#pragma mark - dismiss block
+
+- (WillDismissBlurViewBlcok)willDismissBlurViewCompleted {
+    return objc_getAssociatedObject(self, &XHRealTimeWillDismissBlurViewBlcokKey);
+}
+
+- (void)setWillDismissBlurViewCompleted:(WillDismissBlurViewBlcok)willDismissBlurViewCompleted {
+    objc_setAssociatedObject(self, &XHRealTimeWillDismissBlurViewBlcokKey, willDismissBlurViewCompleted, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (DidDismissBlurViewBlcok)didDismissBlurViewCompleted {
+    return objc_getAssociatedObject(self, &XHRealTimeDidDismissBlurViewBlcokKey);
+}
+
+- (void)setDidDismissBlurViewCompleted:(DidDismissBlurViewBlcok)didDismissBlurViewCompleted {
+    objc_setAssociatedObject(self, &XHRealTimeDidDismissBlurViewBlcokKey, didDismissBlurViewCompleted, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+#pragma mark - RealTimeBlur HUD
+
+
+- (XHRealTimeBlur *)realTimeBlur {
+    return objc_getAssociatedObject(self, &XHRealTimeBlurKey);
+}
+
+- (void)setRealTimeBlur:(XHRealTimeBlur *)realTimeBlur {
+    objc_setAssociatedObject(self, &XHRealTimeBlurKey, realTimeBlur, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+#pragma mark - 分类 公开方法
+
+- (void)showRealTimeBlurWithBlurStyle:(XHBlurStyle)blurStyle {
+    [self showRealTimeBlurWithBlurStyle:blurStyle hasTapGestureEnable:NO];
+}
+
+- (void)showRealTimeBlurWithBlurStyle:(XHBlurStyle)blurStyle hasTapGestureEnable:(BOOL)hasTapGestureEnable {
+    XHRealTimeBlur *realTimeBlur = [self realTimeBlur];
+    if (!realTimeBlur) {
+        realTimeBlur = [[XHRealTimeBlur alloc] initWithFrame:self.bounds];
+        realTimeBlur.blurStyle = blurStyle;
+        [self setRealTimeBlur:realTimeBlur];
+    }
+    realTimeBlur.hasTapGestureEnable = hasTapGestureEnable;
+    
+    realTimeBlur.willShowBlurViewcomplted = self.willShowBlurViewcomplted;
+    realTimeBlur.didShowBlurViewcompleted = self.didShowBlurViewcompleted;
+    
+    realTimeBlur.willDismissBlurViewCompleted = self.willDismissBlurViewCompleted;
+    realTimeBlur.didDismissBlurViewCompleted = self.didDismissBlurViewCompleted;
+    
+    [realTimeBlur showBlurViewAtView:self];
+}
+
+- (void)disMissRealTimeBlur {
+    [[self realTimeBlur] disMiss];
 }
 
 @end

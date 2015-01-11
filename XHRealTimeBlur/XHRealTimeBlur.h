@@ -9,13 +9,20 @@
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
-typedef void(^DidDismissBlurViewBlcok)(void);
+typedef void(^WillShowBlurViewBlcok)(void);
+typedef void(^DidShowBlurViewBlcok)(BOOL finished);
+
 typedef void(^WillDismissBlurViewBlcok)(void);
+typedef void(^DidDismissBlurViewBlcok)(BOOL finished);
 
 
 static NSString * const XHRealTimeBlurKey = @"XHRealTimeBlurKey";
-static NSString * const XHRealTimeDidDismissBlurViewBlcokKey = @"XHRealTimeDidDismissBlurViewBlcokKey";
+
+static NSString * const XHRealTimeWillShowBlurViewBlcokBlcokKey = @"XHRealTimeWillShowBlurViewBlcokBlcokKey";
+static NSString * const XHRealTimeDidShowBlurViewBlcokBlcokKey = @"XHRealTimeDidShowBlurViewBlcokBlcokKey";
+
 static NSString * const XHRealTimeWillDismissBlurViewBlcokKey = @"XHRealTimeWillDismissBlurViewBlcokKey";
+static NSString * const XHRealTimeDidDismissBlurViewBlcokKey = @"XHRealTimeDidDismissBlurViewBlcokKey";
 
 typedef NS_ENUM(NSInteger, XHBlurStyle) {
     // 垂直梯度背景从黑色到半透明的。
@@ -38,14 +45,21 @@ typedef NS_ENUM(NSInteger, XHBlurStyle) {
 @property (nonatomic, assign) BOOL showed;
 
 // Default is 0.3
-@property (nonatomic, assign) NSTimeInterval duration;
+@property (nonatomic, assign) NSTimeInterval showDuration;
+
+// Default is 0.3
+@property (nonatomic, assign) NSTimeInterval disMissDuration;
 
 /**
  *  是否触发点击手势，默认关闭
  */
 @property (nonatomic, assign) BOOL hasTapGestureEnable;
-@property (nonatomic, copy) DidDismissBlurViewBlcok didDismissBlurViewCompleted;
+
+@property (nonatomic, copy) WillShowBlurViewBlcok willShowBlurViewcomplted;
+@property (nonatomic, copy) DidShowBlurViewBlcok didShowBlurViewcompleted;
+
 @property (nonatomic, copy) WillDismissBlurViewBlcok willDismissBlurViewCompleted;
+@property (nonatomic, copy) DidDismissBlurViewBlcok didDismissBlurViewCompleted;
 
 
 - (void)showBlurViewAtView:(UIView *)currentView;
@@ -58,60 +72,15 @@ typedef NS_ENUM(NSInteger, XHBlurStyle) {
 
 @interface UIView (XHRealTimeBlur)
 
-@property (nonatomic, copy) DidDismissBlurViewBlcok didDismissBlurViewCompleted;
+@property (nonatomic, copy) WillShowBlurViewBlcok willShowBlurViewcomplted;
+@property (nonatomic, copy) DidShowBlurViewBlcok didShowBlurViewcompleted;
+
+
 @property (nonatomic, copy) WillDismissBlurViewBlcok willDismissBlurViewCompleted;
+@property (nonatomic, copy) DidDismissBlurViewBlcok didDismissBlurViewCompleted;
 
 - (void)showRealTimeBlurWithBlurStyle:(XHBlurStyle)blurStyle;
 - (void)showRealTimeBlurWithBlurStyle:(XHBlurStyle)blurStyle hasTapGestureEnable:(BOOL)hasTapGestureEnable;
 - (void)disMissRealTimeBlur;
-
-@end
-
-@implementation UIView (XHRealTimeBlur)
-
-- (DidDismissBlurViewBlcok)didDismissBlurViewCompleted {
-    return objc_getAssociatedObject(self, &XHRealTimeDidDismissBlurViewBlcokKey);
-}
-
-- (void)setDidDismissBlurViewCompleted:(DidDismissBlurViewBlcok)didDismissBlurViewCompleted {
-    objc_setAssociatedObject(self, &XHRealTimeDidDismissBlurViewBlcokKey, didDismissBlurViewCompleted, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (WillDismissBlurViewBlcok)willDismissBlurViewCompleted {
-    return objc_getAssociatedObject(self, &XHRealTimeWillDismissBlurViewBlcokKey);
-}
-
-- (void)setWillDismissBlurViewCompleted:(WillDismissBlurViewBlcok)willDismissBlurViewCompleted {
-    objc_setAssociatedObject(self, &XHRealTimeWillDismissBlurViewBlcokKey, willDismissBlurViewCompleted, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (XHRealTimeBlur *)realTimeBlur {
-    return objc_getAssociatedObject(self, &XHRealTimeBlurKey);
-}
-
-- (void)setRealTimeBlur:(XHRealTimeBlur *)realTimeBlur {
-    objc_setAssociatedObject(self, &XHRealTimeBlurKey, realTimeBlur, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (void)showRealTimeBlurWithBlurStyle:(XHBlurStyle)blurStyle {
-    [self showRealTimeBlurWithBlurStyle:blurStyle hasTapGestureEnable:NO];
-}
-
-- (void)showRealTimeBlurWithBlurStyle:(XHBlurStyle)blurStyle hasTapGestureEnable:(BOOL)hasTapGestureEnable {
-    XHRealTimeBlur *realTimeBlur = [self realTimeBlur];
-    if (!realTimeBlur) {
-        realTimeBlur = [[XHRealTimeBlur alloc] initWithFrame:self.bounds];
-        realTimeBlur.blurStyle = blurStyle;
-        [self setRealTimeBlur:realTimeBlur];
-    }
-    realTimeBlur.didDismissBlurViewCompleted = self.didDismissBlurViewCompleted;
-    realTimeBlur.willDismissBlurViewCompleted = self.willDismissBlurViewCompleted;
-    realTimeBlur.hasTapGestureEnable = hasTapGestureEnable;
-    [realTimeBlur showBlurViewAtView:self];
-}
-
-- (void)disMissRealTimeBlur {
-    [[self realTimeBlur] disMiss];
-}
 
 @end
