@@ -26,6 +26,8 @@ Easy to drop into your project.
 * #import "XHRealTimeBlur.h"
 * [self.view showRealTimeBlurWithBlurStyle:XHBlurStyleTranslucent];
 * [self.view disMissRealTimeBlur];
+* And them
+* [self.view - (void)showRealTimeBlurWithBlurStyle:XHBlurStyleTranslucent hasTapGestureEnable:YES]; // or NO
 
 ## License
 
